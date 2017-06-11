@@ -1,9 +1,22 @@
-import urllib2
-import string
+#download the file changing the url to .zip instead of .html
+def pc06():
+    import zipfile
 
-zipped = urllib2.urlopen('http://www.pythonchallenge.com/pc/def/channel.jpg').read()
+    file = zipfile.ZipFile("channel.zip")
 
-unzipped = zip(*zipped)
+    #read, then follow the breadcrump till the end
+    no = 90052
+    bool = True
+    comments = []
+    while bool:
+        try:
+            text = file.open(str(no)+'.txt').read()
+            no = text.split(" ")[-1]
+            print int(no)
+            comments.append(file.getinfo(str(no) + '.txt').comment)
+        except:
+            bool = False
+            print text
 
-for line in unzipped:
-    print line
+
+    print "".join(comments)
